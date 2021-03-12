@@ -9,6 +9,8 @@ import '@vkontakte/vkui/dist/vkui.css';
 
 
 import ViewHome from './views/ViewHome/ViewHome';
+import ViewTransfer from './views/ViewTransfer/ViewTransfer';
+import ViewStaics from './views/ViewStatics/ViewStatics';
 
 
 class App extends Component {
@@ -63,13 +65,10 @@ class App extends Component {
 
 							<ViewHome id="home" activePanel={activePanel} />
 
-							<View id="transfer" activePanel={activePanel}>
-								
-							</View>
+							<ViewTransfer id="transfer" activePanel={activePanel} />
 
-							<View id="statics" activePanel={activePanel}>
-								
-							</View>
+							<ViewStaics id="statics" activePane={activePanel} />
+
 						</Epic>
 					</AppRoot>
 				</AdaptivityProvider>
