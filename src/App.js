@@ -42,6 +42,10 @@ class App extends Component {
 		this.setState({ activeStory, activePanel: "main" });
 	}
 	
+	go = (activePanel) => {
+		this.setState({ activePanel });
+	}
+	
 	render() {
 		const { activePanel, activeStory } = this.state;
 		return(
