@@ -2,9 +2,9 @@ import { View } from "@vkontakte/vkui";
 import React from "react";
 import "./ViewStatics.css";
 
-const ViewStaics = ({ id, activePanel }) => {
+const ViewStaics = ({ id, activePanel, popout }) => {
     return(
-        <View id={id} activePanel={activePanel}>
+        <View id={id} activePanel={activePanel} popout={popout}>
 
         </View>
     );

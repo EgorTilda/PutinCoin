@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import bridge from '@vkontakte/vk-bridge';
-import View from '@vkontakte/vkui/dist/components/View/View';
-import ScreenSpinner from '@vkontakte/vkui/dist/components/ScreenSpinner/ScreenSpinner';
-import { AdaptivityProvider, AppRoot, ConfigProvider, Epic, Tabbar, TabbarItem, Panel, withAdaptivity } from '@vkontakte/vkui';
+import { VKMiniAppAPI } from "@vkontakte/vk-mini-apps-api";
+import { io } from "socket.io-client"
+import { AdaptivityProvider, AppRoot, ConfigProvider, Epic, Tabbar, TabbarItem, ScreenSpinner, withAdaptivity } from '@vkontakte/vkui';
 import { Icon28HomeOutline, Icon28MoneyTransfer, Icon28MoneyTransferOutline, Icon28PollSquareOutline } from "@vkontakte/icons";
 import '@vkontakte/vkui/dist/vkui.css';
 
@@ -12,17 +12,40 @@ import ViewHome from './views/ViewHome/ViewHome';
 import ViewTransfer from './views/ViewTransfer/ViewTransfer';
 import ViewStaics from './views/ViewStatics/ViewStatics';
 
+const api = new VKMiniAppAPI();
 
 class App extends Component {
 
 	state = {
 		activeStory: "home",
 		activePanel: "main",
-		popout: null,
+		popout: <ScreenSpinner />,
 		snackbar: null,
 		globState: {
-
+			api: null
 		}
+	}
+
+	componentDidMount() {
+		api.initApp();
+		this.setGlobState({ api });
+		const socket = io("wss://81.177.136.143:3000" + window.location.search , { transports: ["websocket"], autoConnect: true } );
+		socket.on("init", this.init)
+		socket.onAny((data) => console.log(data))
+	}
+
+	onMessage = (data) => {
+		console.log(data)
+	}
+
+	init = (data) => {
+		console.log(data)
+		this.setPopout(null)
+		this.setGlobState({ user: { ...this.state.globState, data, user_id: undefined } });
+	}
+
+	onclose = (e) => {
+	
 	}
 
 	setGlobState = (e) => {
@@ -47,9 +70,9 @@ class App extends Component {
 	}
 	
 	render() {
-		const { activePanel, activeStory } = this.state;
+		const { activePanel, activeStory, popout } = this.state;
 		return(
-			<ConfigProvider>
+			<ConfigProvider >
 				<AdaptivityProvider>
 					<AppRoot>
 						<Epic activeStory={activeStory} tabbar={
@@ -67,11 +90,23 @@ class App extends Component {
 						}>
 
 
-							<ViewHome id="home" activePanel={activePanel} />
+							<ViewHome 
+								id="home" 
+								activePanel={activePanel}
+								popout={popout}
+							/>
 
-							<ViewTransfer id="transfer" activePanel={activePanel} />
+							<ViewTransfer 
+								id="transfer" 
+								activePanel={activePanel} 
+								popout={popout}
+							/>
 
-							<ViewStaics id="statics" activePane={activePanel} />
+							<ViewStaics 
+								id="statics" 
+								activePane={activePanel} 
+								popout={popout}
+							/>
 
 						</Epic>
 					</AppRoot>

@@ -1,12 +1,15 @@
-import { Panel, View } from "@vkontakte/vkui";
+import { Div, Panel, PanelHeader, SimpleCell, Title, View } from "@vkontakte/vkui";
 import React from "react";
-import "./ViewHome.css";
+import "./ViewHome.scss";
 
-const ViewHome = ({ id, activePanel }) => {
+const ViewHome = ({ id, activePanel, popout }) => {
     return(
-        <View id={id} activePanel={activePanel}>
+        <View id={id} popout={popout} activePanel={activePanel}>
             <Panel id="main">
-                ff
+                <PanelHeader separator={false}></PanelHeader>
+                <Div align="center">
+                    <Title level="1">1,001</Title>
+                </Div>
             </Panel>
         </View>
     );

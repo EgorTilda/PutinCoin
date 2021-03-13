@@ -2,9 +2,9 @@ import { List, Panel, PanelHeader, Search, View } from "@vkontakte/vkui";
 import React from "react";
 import "./ViewTransfer.css";
 
-const ViewTransfer = ({ id, activePanel }) => {
+const ViewTransfer = ({ id, activePanel, popout }) => {
     return(
-        <View id={id} activePanel={activePanel}>
+        <View id={id} activePanel={activePanel} popout={popout}>
             <Panel id="main">
                 <PanelHeader separator={false}>Переводы</PanelHeader>
                 <Search />
