@@ -22,16 +22,17 @@ class App extends Component {
 		popout: <ScreenSpinner />,
 		snackbar: null,
 		globState: {
-			api: null
+			api: null,
+			user: null
 		}
 	}
 
 	componentDidMount() {
 		api.initApp();
-		this.setGlobState({ api });
 		const socket = io("wss://81.177.136.143:3000" + window.location.search , { transports: ["websocket"], autoConnect: true } );
 		socket.on("init", this.init)
 		socket.onAny((data) => console.log(data))
+		this.setGlobState({ api, socket });
 	}
 
 	onMessage = (data) => {
@@ -41,7 +42,7 @@ class App extends Component {
 	init = (data) => {
 		console.log(data)
 		this.setPopout(null)
-		this.setGlobState({ user: { ...this.state.globState, data, user_id: undefined } });
+		this.setGlobState({ user: { ...data, user_id: undefined } });
 	}
 
 	onclose = (e) => {
@@ -70,7 +71,7 @@ class App extends Component {
 	}
 	
 	render() {
-		const { activePanel, activeStory, popout } = this.state;
+		const { activePanel, activeStory, popout, globState, snackbar } = this.state;
 		return(
 			<ConfigProvider >
 				<AdaptivityProvider>
@@ -94,18 +95,33 @@ class App extends Component {
 								id="home" 
 								activePanel={activePanel}
 								popout={popout}
+								snackbar={snackbar}
+								globState={globState}
+								setGlobState={this.setGlobState}
+								setPopout={this.setPopout}
+								setSnackbar={this.setSnackbar}
 							/>
 
 							<ViewTransfer 
 								id="transfer" 
 								activePanel={activePanel} 
 								popout={popout}
+								snackbar={snackbar}
+								globState={globState}
+								setGlobState={this.setGlobState}
+								setPopout={this.setPopout}
+								setSnackbar={this.setSnackbar}
 							/>
 
 							<ViewStaics 
 								id="statics" 
 								activePane={activePanel} 
 								popout={popout}
+								snackbar={snackbar}
+								globState={globState}
+								setGlobState={this.setGlobState}
+								setPopout={this.setPopout}
+								setSnackbar={this.setSnackbar}
 							/>
 
 						</Epic>
