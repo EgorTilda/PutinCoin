@@ -19,11 +19,13 @@ class App extends Component {
 	state = {
 		activeStory: "home",
 		activePanel: "main",
-		popout: <ScreenSpinner />,
+		popout: null,
 		snackbar: null,
 		globState: {
 			api: null,
-			user: null
+			user: {
+				score: 9
+			}
 		}
 	}
 

@@ -1,6 +1,7 @@
 import { Button, Div, Panel, PanelHeader, SimpleCell, Title, View } from "@vkontakte/vkui";
 import React from "react";
 import "./ViewHome.scss";
+import UserScore from "./../../Components/UserScore/UserScore";
 
 const ViewHome = ({ id, activePanel, popout, globState }) => {
     const { user } = globState;
@@ -11,9 +12,7 @@ const ViewHome = ({ id, activePanel, popout, globState }) => {
                 <PanelHeader separator={false}></PanelHeader>
                 {user && 
                     <Div align="center">
-                        <Title level="1">{score}</Title>
-                        <span className="scoreText__bottom">+1.273</span>
-                        {/* <Button mode="tertiary" size="m" className="score__quest">Есть вопросы?</Button> */}
+                        <UserScore scoreValue={score}/>
                     </Div>
                 }
             </Panel>
