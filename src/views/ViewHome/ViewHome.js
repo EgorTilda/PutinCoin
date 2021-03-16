@@ -13,9 +13,7 @@ const ViewHome = ({ id, activePanel, popout, globState }) => {
                 {user &&       
                     <UserScore scoreValue={score}/>
                 }
-                <Separator style={{ margin: '12px 0' }} />
-
-
+                
                 <CardGrid size="m">
                     <Card>
                         <div style={{ paddingBottom: '62%' }} />
