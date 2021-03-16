@@ -1,4 +1,4 @@
-import { Div, Title, Separator } from "@vkontakte/vkui";
+import { Div, Title, Separator, Card, CardGrid } from "@vkontakte/vkui";
 import React from "react";
 import "./UserScore.scss";
 import coinImg from "./../../img/Coin.svg";
@@ -12,8 +12,6 @@ const UserScore = ({ scoreValue }) => {
                     <img className="score__img" src={coinImg} alt="Путин Коин" />
                 </Div>
             </Div>
-
-            <Separator style={{ margin: '12px 0' }} />
         </div>
     );
 }

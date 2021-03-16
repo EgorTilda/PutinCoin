@@ -31,6 +31,9 @@ class App extends Component {
 		api.initApp();
 		const socket = io("wss://81.177.136.143:3000" + window.location.search , { transports: ["websocket"], autoConnect: true } );
 		socket.on("init", this.init)
+		socket.on("updated_score", score => {
+			this.setGlobState({ user: { ...this.state.globState.user, score }});
+		})
 		socket.onAny((data) => console.log(data))
 		this.setGlobState({ api, socket });
 	}
@@ -40,9 +43,12 @@ class App extends Component {
 	}
 
 	init = (data) => {
-		console.log(data)
 		this.setPopout(null)
-		this.setGlobState({ user: { ...data, user_id: undefined } });
+		this.setGlobState({ user: { ...data, id: undefined } });
+		// setInterval(() => {
+		// 	this.state.globState.socket.emit("add_score_timer");
+		// }, 1000);
+		
 	}
 
 	onclose = (e) => {
