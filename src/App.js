@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import bridge from '@vkontakte/vk-bridge';
 import { VKMiniAppAPI } from "@vkontakte/vk-mini-apps-api";
 import { io } from "socket.io-client"
-import { AdaptivityProvider, AppRoot, ConfigProvider, Epic, Tabbar, TabbarItem, ScreenSpinner, withAdaptivity } from '@vkontakte/vkui';
+import { AdaptivityProvider, AppRoot, ConfigProvider, Epic, Tabbar, TabbarItem, ScreenSpinner, withAdaptivity, Alert } from '@vkontakte/vkui';
 import { Icon28HomeOutline, Icon28MoneyTransfer, Icon28MoneyTransferOutline, Icon28PollSquareOutline } from "@vkontakte/icons";
 import '@vkontakte/vkui/dist/vkui.css';
 
@@ -29,12 +29,32 @@ class App extends Component {
 
 	componentDidMount() {
 		api.initApp();
-		const socket = io("wss://81.177.136.143:3000" + window.location.search , { transports: ["websocket"], autoConnect: true } );
+		const socket = io("wss://81.177.136.143:3000" + window.location.search , { transports: ["websocket"], autoConnect: false } );
+		socket.connect();
 		socket.on("init", this.init)
-		socket.on("updated_score", score => {
-			this.setGlobState({ user: { ...this.state.globState.user, score }});
+		socket.on("two_source", () => {
+			this.setPopout(
+				<Alert 
+					header="Ошибка" 
+					text="Вы уже подключены с другого устройства!"
+					onClose={() => {
+						this.setPopout(<ScreenSpinner />)
+						socket.open();
+					}} 
+					actions={[
+						{
+							title: "Поробовать снова",
+							action: () => {
+								this.setPopout(<ScreenSpinner />)
+								socket.open();
+							}
+						}
+					]} 
+				/>)
 		})
-		socket.onAny((data) => console.log(data))
+		socket.onAny((data) => {
+			console.log(data)
+		})
 		this.setGlobState({ api, socket });
 	}
 
@@ -45,9 +65,12 @@ class App extends Component {
 	init = (data) => {
 		this.setPopout(null)
 		this.setGlobState({ user: { ...data, id: undefined } });
-		// setInterval(() => {
-		// 	this.state.globState.socket.emit("add_score_timer");
-		// }, 1000);
+		this.state.globState.socket.on("updated_score", score => {
+			this.setGlobState({ user: { ...this.state.globState.user, score }});
+		})
+		setInterval(() => {
+			this.state.globState.socket.emit("add_score_timer");
+		}, 1000);
 		
 	}
 
