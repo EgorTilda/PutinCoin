@@ -30,9 +30,20 @@ class App extends Component {
 	componentDidMount() {
 		api.initApp();
 		const socket = io("wss://81.177.136.143:3000" + window.location.search , { transports: ["websocket"], autoConnect: false } );
-		socket.connect();
+		socket.open();
+		this.onError(socket);
 		socket.on("init", this.init)
+		
+
+		socket.onAny((data) => {
+			console.log(data)
+		})
+		this.setGlobState({ api, socket });
+	}
+
+	onError = (socket) => {
 		socket.on("two_source", () => {
+			clearInterval(this.state.globState.timer)
 			this.setPopout(
 				<Alert 
 					header="Ошибка" 
@@ -51,27 +62,45 @@ class App extends Component {
 						}
 					]} 
 				/>)
-		})
-		socket.onAny((data) => {
-			console.log(data)
-		})
-		this.setGlobState({ api, socket });
-	}
+	   })
 
-	onMessage = (data) => {
-		console.log(data)
+	   socket.on("kill", () => {
+		clearInterval(this.state.globState.timer)
+		this.setPopout(
+			<Alert 
+				header="Ошибка" 
+				text="Обновление серверов"
+				onClose={() => {
+					this.setPopout(<ScreenSpinner />)
+					socket.open();
+				}} 
+				actions={[
+					{
+						title: "Поробовать снова",
+						action: () => {
+							this.setPopout(<ScreenSpinner />)
+							socket.open();
+						}
+					}
+				]} 
+			/>)
+	   })
+
+
+	   socket.on("disconnect", () => {
+		   clearInterval(this.state.globState.timer)
+	   })
 	}
 
 	init = (data) => {
 		this.setPopout(null)
-		this.setGlobState({ user: { ...data, id: undefined } });
 		this.state.globState.socket.on("updated_score", score => {
 			this.setGlobState({ user: { ...this.state.globState.user, score }});
 		})
-		setInterval(() => {
+		let timer = setInterval(() => {
 			this.state.globState.socket.emit("add_score_timer");
 		}, 1000);
-		
+		this.setGlobState({ user: { ...data, id: undefined }, timer });
 	}
 
 	onclose = (e) => {
