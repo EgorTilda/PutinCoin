@@ -1,6 +1,9 @@
-import { ModalRoot } from "@vkontakte/vkui";
+import { ModalPage, ModalPageHeader, ModalRoot, RichCell } from "@vkontakte/vkui";
 import React, { Component } from "react";
 import "./ModalMain.css";
+import ModalStock from "./ModalStocks/ModalStock";
+
+
 
 class ModalMain extends Component {
 
@@ -10,11 +13,18 @@ class ModalMain extends Component {
     }
 
     render() {
-        const { activeModal } = this.props;
+        const { activeModal, globState } = this.props;
         return(
             <ModalRoot activeModal={activeModal}>
-
+                <ModalPage id="stocks" onClose={this.close} dynamicContentHeight header={<ModalPageHeader>Акции</ModalPageHeader>}>
+                    <ModalStock 
+                        stocks={globState.stocks}
+                        user={globState.user}
+                    />
+                </ModalPage>
             </ModalRoot>
         )
     }
 }
+
+export default ModalMain;

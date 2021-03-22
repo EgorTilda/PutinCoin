@@ -3,11 +3,11 @@ import React from "react";
 import "./ViewHome.scss";
 import UserScore from "./../../Components/UserScore/UserScore";
 
-const ViewHome = ({ id, activePanel, popout, globState }) => {
+const ViewHome = ({ id, activePanel, popout, globState, setActiveModal, modal }) => {
     const { user } = globState;
     const score = user ? (user.score/1000).toFixed(3) : null;
     return(
-        <View id={id} popout={popout} activePanel={activePanel}>
+        <View id={id} popout={popout} activePanel={activePanel} modal={modal}>
             <Panel id="main">
                 <PanelHeader separator={false}></PanelHeader>
                 {user &&       
@@ -15,7 +15,7 @@ const ViewHome = ({ id, activePanel, popout, globState }) => {
                 }
                 
                 <CardGrid size="m">
-                    <Card>
+                    <Card onClick={() => setActiveModal("stocks")}>
                         <div style={{ paddingBottom: '62%' }} />
                     </Card>
                     <Card>

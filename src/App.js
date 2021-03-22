@@ -11,6 +11,7 @@ import '@vkontakte/vkui/dist/vkui.css';
 import ViewHome from './views/ViewHome/ViewHome';
 import ViewTransfer from './views/ViewTransfer/ViewTransfer';
 import ViewStaics from './views/ViewStatics/ViewStatics';
+import ModalMain from './modals/ModalMain';
 
 const api = new VKMiniAppAPI();
 
@@ -23,7 +24,8 @@ class App extends Component {
 		snackbar: null,
 		globState: {
 			api: null,
-			user: null
+			user: null,
+			stocks: [],
 		}
 	}
 
@@ -35,9 +37,9 @@ class App extends Component {
 		socket.on("init", this.init)
 		
 
-		socket.onAny((data) => {
-			console.log(data)
-		})
+		// socket.onAny((data) => {
+		// 	console.log(data)
+		// })
 		this.setGlobState({ api, socket });
 	}
 
@@ -93,9 +95,13 @@ class App extends Component {
 	}
 
 	init = (data) => {
+		console.log(data)
 		this.setPopout(null)
 		this.state.globState.socket.on("updated_score", score => {
 			this.setGlobState({ user: { ...this.state.globState.user, score }});
+		})
+		this.state.globState.socket.on("updated_stocks", stocks => {
+			this.setGlobState({ stocks });
 		})
 		let timer = setInterval(() => {
 			this.state.globState.socket.emit("add_score_timer");
@@ -110,6 +116,10 @@ class App extends Component {
 	setGlobState = (e) => {
 		const { globState} = this.state;
 		this.setState({ globState: { ...globState, ...e }})
+	}
+
+	setActiveModal = (activeModal) => {
+		this.setState({ activeModal });
 	}
 
 	setPopout = (popout) => {
@@ -129,39 +139,58 @@ class App extends Component {
 	}
 	
 	render() {
-		const { activePanel, activeStory, popout, globState, snackbar } = this.state;
+		const { activePanel, activeStory, activeModal, popout, globState, snackbar } = this.state;			
+		
 		return(
 			<ConfigProvider >
 				<AdaptivityProvider>
 					<AppRoot>
-						<Epic activeStory={activeStory} tabbar={
-							<Tabbar>
-								<TabbarItem selected={activeStory === "home"} onClick={() => this.onChangeStory("home")}>
-									<Icon28HomeOutline />
-								</TabbarItem>
-								<TabbarItem selected={activeStory === "transfer"} onClick={() => this.onChangeStory("transfer")}>
-									<Icon28MoneyTransferOutline />
-								</TabbarItem>
-								<TabbarItem selected={activeStory === "statics"} onClick={() => this.onChangeStory("statics")}>
-									<Icon28PollSquareOutline />
-								</TabbarItem>
-							</Tabbar>
-						}>
+						<Epic
+							activeStory={activeStory} 
+							tabbar={
+								<Tabbar>
+									<TabbarItem selected={activeStory === "home"} onClick={() => this.onChangeStory("home")}>
+										<Icon28HomeOutline />
+									</TabbarItem>
+									<TabbarItem selected={activeStory === "transfer"} onClick={() => this.onChangeStory("transfer")}>
+										<Icon28MoneyTransferOutline />
+									</TabbarItem>
+									<TabbarItem selected={activeStory === "statics"} onClick={() => this.onChangeStory("statics")}>
+										<Icon28PollSquareOutline />
+									</TabbarItem>
+								</Tabbar>
+							}
+						>
 
 
 							<ViewHome 
 								id="home" 
+								modal={
+									<ModalMain 
+										activeModal={activeModal}
+										setActiveModal={this.setActiveModal}
+										globState={globState}
+									/> 
+								}
 								activePanel={activePanel}
 								popout={popout}
 								snackbar={snackbar}
 								globState={globState}
 								setGlobState={this.setGlobState}
+								setActiveModal={this.setActiveModal}
 								setPopout={this.setPopout}
 								setSnackbar={this.setSnackbar}
 							/>
 
 							<ViewTransfer 
 								id="transfer" 
+								modal={
+									<ModalMain 
+										activeModal={activeModal}
+										setActiveModal={this.setActiveModal}
+										globState={globState}
+									/> 
+								}
 								activePanel={activePanel} 
 								popout={popout}
 								snackbar={snackbar}
@@ -173,6 +202,13 @@ class App extends Component {
 
 							<ViewStaics 
 								id="statics" 
+								modal={
+									<ModalMain 
+										activeModal={activeModal}
+										setActiveModal={this.setActiveModal}
+										globState={globState}
+									/> 
+								}
 								activePane={activePanel} 
 								popout={popout}
 								snackbar={snackbar}
