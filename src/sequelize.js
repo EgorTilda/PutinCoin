@@ -2,6 +2,7 @@ import pkg from 'sequelize';
 const { Sequelize, DataTypes } = pkg;
 
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
+    ssl: false,
     dialect: "postgres"
 });
 
