@@ -1,4 +1,4 @@
-import { createServer } from "https";
+import { createServer } from "http";
 import { Server } from "socket.io";
 import { auth } from "./auth.js";
 import easyvk from "easyvk"
