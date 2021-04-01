@@ -31,7 +31,7 @@ class App extends Component {
 
 	componentDidMount() {
 		api.initApp();
-		const socket = io("wss://81.177.136.143:3000" + window.location.search , { transports: ["websocket"], autoConnect: false } );
+		const socket = io("wss://cherry-pudding-44335.herokuapp.com" + window.location.search , { transports: ["websocket"], autoConnect: false } );
 		socket.open();
 		this.onError(socket);
 		socket.on("init", this.init)
