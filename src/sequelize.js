@@ -2,8 +2,14 @@ import pkg from 'sequelize';
 const { Sequelize, DataTypes } = pkg;
 
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
-    ssl: true,
-    dialect: "postgres"
+    dialect: 'postgres',
+    protocol: 'postgres',
+    dialectOptions: {
+        ssl: {
+            require: true,
+            rejectUnauthorized: false
+        }
+    }
 });
 
 sequelize.define("User", {
