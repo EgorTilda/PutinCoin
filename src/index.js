@@ -1,15 +1,11 @@
 import { createServer } from "https";
 import { Server } from "socket.io";
-import mysql from "mysql2";
 import { auth } from "./auth.js";
-import fs from "fs";
 import easyvk from "easyvk"
 import express from "express";
 import sequelize from "./sequelize.js";
 import readline from "readline";
 
-const options = {
-}
 
 const app = express();
 
@@ -17,9 +13,6 @@ const app = express();
 
 const server = createServer(options, app);
 const io = new Server(server, {
-  cors: {
-    origin: ["https://localhost:10888/"]
-  }
 });
 
 
@@ -129,8 +122,8 @@ easyvk({
   });
 });
 
-server.listen(3000, () => {
-  console.log("server started on port 3000");
+server.listen(process.env.PORT || 3000, () => {
+  console.log("server started on port " + process.env.PORT);
 })
 
 setInterval(() => {

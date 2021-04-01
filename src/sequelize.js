@@ -1,11 +1,7 @@
 import pkg from 'sequelize';
 const { Sequelize, DataTypes } = pkg;
 
-const sequelize = new Sequelize("PutinCoin", "putin",  "semgo2004", {
-    host: 'localhost',
-    dialect: "mysql",
-    logging: false
-  })
+const sequelize = new Sequelize(process.env.DATABASE_URL);
 
 sequelize.define("User", {
     user_id: {
