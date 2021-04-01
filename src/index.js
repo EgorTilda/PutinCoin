@@ -9,8 +9,6 @@ import sequelize from "./sequelize.js";
 import readline from "readline";
 
 const options = {
-  key:    fs.readFileSync("/root/PutinCoin/src/2.key"),
-  cert:   fs.readFileSync("/root/PutinCoin/src/1.crt")
 }
 
 const app = express();
