@@ -1,7 +1,9 @@
 import pkg from 'sequelize';
 const { Sequelize, DataTypes } = pkg;
 
-const sequelize = new Sequelize(process.env.DATABASE_URL);
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
+    dialect: "postgres"
+});
 
 sequelize.define("User", {
     user_id: {
