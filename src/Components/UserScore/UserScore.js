@@ -1,18 +1,19 @@
 import { Div, Title, Separator } from "@vkontakte/vkui";
 import React from "react";
 import "./UserScore.scss";
-import coinImg from "./../../img/Coin.svg";
+import coinImg from "./../../img/Coin-wh.svg";
 
 const UserScore = ({ scoreValue }) => {
     return (
         <div className="score">
-            <Div className="score__wrapper">
-                <Title className="score__value" level="1">{scoreValue}</Title>
-                <Div className="score__coin">
-                    <img className="score__img" src={coinImg} alt="Путин Коин" />
-                </Div>
-            </Div>
-            <Separator style={{ margin: '12px 0' }} />
+            <div className="score__content">
+                <div className="score__value">
+                    <div className="score__num">
+                        {scoreValue}
+                    </div>
+                    <img className="score__img" src={coinImg} />
+                </div>
+            </div>
         </div>
     );
 }
