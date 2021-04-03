@@ -101,6 +101,12 @@ easyvk({
         }
       })
 
+      socket.on("get_stocks", (stocks) => {
+        Stock.findAll().then(stocks => {
+          socket.emit("updated_stocks", stocks)
+        }) 
+      })
+
 
       socket.on("add_score_timer", () => {
         User.findOne({ where: { socket_id : socket.id} }).then((user) => {
