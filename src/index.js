@@ -114,10 +114,18 @@ easyvk({
       })
 
 
-      socket.on("add_score_timer", () => {
-        User.findOne({ where: { socket_id : socket.id} }).then((user) => {
-          User.update({ score: user.score + user.speed }, { where: { socket_id: socket.id } }).then(() => {
-            socket.emit("updated_score", user.score + user.speed);
+      socket.on("add_score_timer", (user_id) => {
+        User.findOne({ where: { user_id } }).then((user) => {
+          let add_score = 0;
+          Buy.findAll({ where: { user_id }}).then(buys => {
+            buys.forEach((buy) => {
+              Stock.findByPk(buy.stock_id).then(stock => {
+                  add_score += stock.speed;
+              })
+            })
+          })
+          User.update({ score: user.score + add_score }, { where: { user_id }}).then(() => {
+            socket.emit("updated_score", user.score + add_score);
           })
         })
       })
