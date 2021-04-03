@@ -116,7 +116,7 @@ easyvk({
 
       socket.on("add_score_timer", (user_id) => {
         User.findOne({ where: { user_id } }).then((user) => {
-          let add_score = 0;
+          let add_score = user.speed;
           Buy.findAll({ where: { user_id }}).then(buys => {
             buys.forEach((buy) => {
               Stock.findByPk(buy.stock_id).then(stock => {
