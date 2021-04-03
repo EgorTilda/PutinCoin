@@ -25,7 +25,7 @@ class App extends Component {
 		globState: {
 			api: null,
 			user: null,
-			stocks: [],
+			stocks: []
 		}
 	}
 
