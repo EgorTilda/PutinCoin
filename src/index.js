@@ -108,7 +108,7 @@ easyvk({
       })
 
       socket.on("get_buys", (user_id) => {
-        Stock.findAll({ where: { user_id }}).then(buys => {
+        Buy.findAll({ where: { user_id }}).then(buys => {
           socket.emit("updated_buys", stocks)
         }) 
       })
