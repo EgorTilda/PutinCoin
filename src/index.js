@@ -157,7 +157,7 @@ setInterval(() => {
         Stock.update({ speed: stock.speed, cost: stock.cost }, { where: { stock_id: i+1}})
       })
       Stock.findAll().then(stocks => {
-        socket.emit("updated_stocks", stocks)
+        io.emit("updated_stocks", stocks)
       }) 
     })
 }, 90000)
