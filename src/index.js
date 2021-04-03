@@ -149,13 +149,16 @@ server.listen(process.env.PORT || 3000, () => {
 setInterval(() => {
   console.log("updated stock " + new Date())
     Stock.findAll().then((stocks) => {
-      stocks.forEach((stock) => {
-        const stock_id = stock.stock_id;
-        Buy.findAndCountAll({ where: { stock_id }}).then((count) => {
-          console.log(count);
-        })
-        
+      for (let i = stocks.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        [stocks[i], stocks[j]] = [stocks[j], stocks[i]];
+      }
+      stocks.forEach((stock, i) => {
+        Stock.update({ speed: stock.speed, cost: stock.cost }, { where: { stock_id: i+1}})
       })
+      Stock.findAll().then(stocks => {
+        socket.emit("updated_stocks", stocks)
+      }) 
     })
 }, 90000)
 
