@@ -142,9 +142,9 @@ easyvk({
                   add_score += stock.speed;
               })
             })
-          })
-          User.update({ score: user.score + add_score }, { where: { user_id }}).then(() => {
-            socket.emit("updated_score", { score: user.score + add_score, add_score });
+            User.update({ score: user.score + add_score }, { where: { user_id }}).then(() => {
+              socket.emit("updated_score", { score: user.score + add_score, add_score });
+            })
           })
         })
       })
