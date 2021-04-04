@@ -109,7 +109,7 @@ easyvk({
             const cost = stock.cost*(count+1);
             User.findByPk(user_id).then(user => {
               if(user.score >= cost) {
-                User.update({ score: user.score-cost }, { user_id }).then(() => {
+                User.update({ score: user.score-cost }, { where: { user_id}  }).then(() => {
                   Buy.create({ user_id, stock_id }).then((buy) => {
                       socket.emit("buy_create", buy);
                   })
