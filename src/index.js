@@ -101,6 +101,25 @@ easyvk({
         }
       })
 
+      socket.on("buy", data => {
+        const { user_id, stock_id} = data;
+        Buy.findAll({ user_id, stock_id }).then((buys) => {
+          const count = buys.length;
+          Stock.findOne({ stock_id }).then(stock => {
+            const cost = stock.cost*(count+1);
+            User.findByPk(user_id).then(user => {
+              if(user.score >= cost) {
+                User.update({ score: user.score-cost }, { user_id }).then(() => {
+                  Buy.create({ user_id, stock_id }).then((buy) => {
+                      socket.emit("buy_create", buy);
+                  })
+                })
+              }
+            })
+          })
+        })
+      })
+
       socket.on("get_stocks", (stocks) => {
         Stock.findAll().then(stocks => {
           socket.emit("updated_stocks", stocks)
