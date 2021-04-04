@@ -141,7 +141,7 @@ easyvk({
               buys.forEach((buy) => {
                 add_score += stocks[buy.stock_id].speed;
               })
-              socket.emit("updated_score", { score: 0, add_score});
+              socket.emit("updated_score", { score: user_score + add_score , add_score});
             })
           })
         })
