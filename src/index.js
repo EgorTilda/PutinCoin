@@ -138,13 +138,7 @@ easyvk({
           let add_score = user.speed;
           Buy.findAll({ where: { user_id }}).then(buys => {
             Stock.findAll().then(stocks => {
-              buys.forEach((buys) => {
-                add_score += stocks[buys.stock_id-1];
-              })
-              User.update({ score: user.score + add_score }, { where: { user_id }}).then(() => {
-                socket.emit("updated_score", { score: user.score + add_score, add_score });
-              })
-            })    
+              console.log(stocks)    
           })
         })
       })
