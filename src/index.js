@@ -105,7 +105,7 @@ easyvk({
         const { user_id, stock_id} = data;
         Buy.findAll({ user_id, stock_id }).then((buys) => {
           const count = buys.length;
-          Stock.findOne({ stock_id }).then(stock => {
+          Stock.findOne({ where: { stock_id }}).then(stock => {
             const cost = stock.cost*(count+1);
             User.findByPk(user_id).then(user => {
               if(user.score >= cost) {
