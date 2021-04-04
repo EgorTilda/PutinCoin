@@ -172,7 +172,7 @@ setInterval(() => {
         [stocks[i], stocks[j]] = [stocks[j], stocks[i]];
       }
       stocks.forEach((stock, i) => {
-        Stock.update({ speed: stock.speed, cost: stock.cost }, { where: { stock_id: i+1}})
+        Stock.update({ speed: stock.speed, cost: stock.cost }, { where: { stock_id: i }})
       })
       Stock.findAll().then(stocks => {
         io.emit("updated_stocks", stocks)
