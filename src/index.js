@@ -120,7 +120,7 @@ easyvk({
         })
       })
 
-      socket.on("get_stocks", (stocks) => {
+      socket.on("get_stocks", () => {
         Stock.findAll().then(stocks => {
           socket.emit("updated_stocks", stocks)
         }) 
@@ -144,7 +144,7 @@ easyvk({
             })
           })
           User.update({ score: user.score + add_score }, { where: { user_id }}).then(() => {
-            socket.emit("updated_score", user.score + add_score);
+            socket.emit("updated_score", { score: user.score + add_score, add_score });
           })
         })
       })
