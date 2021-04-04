@@ -139,11 +139,11 @@ easyvk({
           Buy.findAll({ where: { user_id }}).then(buys => {
             Stock.findAll().then(stocks => {
               console.log(stocks)    
+            })
           })
         })
       })
-
-    
+      
       socket.on("disconnect", () => {
           User.update({ online: false, socket_id: "" }, { where: { socket_id: socket.id } }).then(() => {
 
