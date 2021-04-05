@@ -13,11 +13,13 @@ class ModalMain extends Component {
     }
 
     render() {
-        const { activeModal, globState } = this.props;
+        const { activeModal, globState, setPopout } = this.props;
         return(
             <ModalRoot activeModal={activeModal}>
                 <ModalPage id="stocks" onClose={this.close} dynamicContentHeight header={<ModalPageHeader>Акции</ModalPageHeader>}>
                     <ModalStock 
+                        setPopout={setPopout}
+                        socket={globState.socket}
                         stocks={globState.stocks}
                         user={globState.user}
                     />

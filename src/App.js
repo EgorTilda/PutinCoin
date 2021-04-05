@@ -35,11 +35,6 @@ class App extends Component {
 		socket.open();
 		this.onError(socket);
 		socket.on("init", this.init)
-		
-
-		// socket.onAny((data) => {
-		// 	console.log(data)
-		// })
 		this.setGlobState({ api, socket });
 	}
 
@@ -95,16 +90,37 @@ class App extends Component {
 	}
 
 	init = (data) => {
-		console.log(data)
+		const { socket } = this.state.globState;
+		socket.emit("get_buys", data.user_id);
+		socket.emit("get_stocks");	
 		this.setPopout(null)
-		this.state.globState.socket.on("updated_score", score => {
-			this.setGlobState({ user: { ...this.state.globState.user, score }});
+		socket.on("updated_score", (data) => {
+			console.log(data)
+			const { score, add_score} = data;
+			const { user } = this.state.globState;
+			this.setGlobState({ user: { ...user, score }});
 		})
-		this.state.globState.socket.on("updated_stocks", stocks => {
+		socket.on("updated_stocks", stocks => {
+			console.log(stocks)
 			this.setGlobState({ stocks });
 		})
+
+		socket.on("updated_buys", buys => {
+			console.log(buys)
+			const { user } = this.state.globState;
+			this.setGlobState({  user: { ...user, buys} });
+		})
+
+		socket.on("buy_create", (buy) => {
+			const { user } = this.state.globState;
+			this.setGlobState({  user: { ...user, buys: [...user.buys, buy]} });
+			this.setPopout(null)
+		})
+
+
 		let timer = setInterval(() => {
-			this.state.globState.socket.emit("add_score_timer");
+			const { user } = this.state.globState;
+			socket.emit("add_score_timer", user.user_id);
 		}, 1000);
 		this.setGlobState({ user: { ...data, id: undefined }, timer });
 	}
@@ -114,7 +130,7 @@ class App extends Component {
 	}
 
 	setGlobState = (e) => {
-		const { globState} = this.state;
+		const { globState } = this.state;
 		this.setState({ globState: { ...globState, ...e }})
 	}
 
@@ -168,6 +184,7 @@ class App extends Component {
 								modal={
 									<ModalMain 
 										activeModal={activeModal}
+										setPopout={this.setPopout}
 										setActiveModal={this.setActiveModal}
 										globState={globState}
 									/> 
