@@ -103,7 +103,7 @@ easyvk({
 
       socket.on("buy", data => {
         const { user_id, stock_id} = data;
-        Buy.findAll({ user_id, stock_id }).then((buys) => {
+        Buy.findAll({ where: { user_id, stock_id } }).then((buys) => {
           const count = buys.length;
           Stock.findOne({ where: { stock_id }}).then(stock => {
             const cost = stock.cost*(count+1);
@@ -178,5 +178,5 @@ setInterval(() => {
         io.emit("updated_stocks", stocks)
       }) 
     })
-}, 90000)
+}, 2000)
 
