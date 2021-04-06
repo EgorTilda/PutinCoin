@@ -115,7 +115,7 @@ easyvk({
                   })
                 })
               } else {
-                console.log("fff")
+                socket.emit("error_cost_change");
               }
             })
           })
