@@ -114,6 +114,8 @@ easyvk({
                       socket.emit("buy_create", buy);
                   })
                 })
+              } else {
+                console.log("fff")
               }
             })
           })
