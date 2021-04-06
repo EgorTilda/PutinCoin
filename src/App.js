@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import bridge from '@vkontakte/vk-bridge';
 import { VKMiniAppAPI } from "@vkontakte/vk-mini-apps-api";
 import { io } from "socket.io-client"
-import { AdaptivityProvider, AppRoot, ConfigProvider, Epic, Tabbar, TabbarItem, ScreenSpinner, withAdaptivity, Alert } from '@vkontakte/vkui';
+import { AdaptivityProvider, AppRoot, ConfigProvider, Epic, Tabbar, TabbarItem, ScreenSpinner, withAdaptivity, Alert, Snackbar } from '@vkontakte/vkui';
 import { Icon28HomeOutline, Icon28MoneyTransfer, Icon28MoneyTransferOutline, Icon28PollSquareOutline } from "@vkontakte/icons";
 import '@vkontakte/vkui/dist/vkui.css';
 
@@ -61,6 +61,11 @@ class App extends Component {
 				/>)
 	   })
 
+	   socket.on("error_cost_change", () => {
+		   this.setPopout(null)
+		   this.setSnackbar(<Snackbar onClose={() => this.setSnackbar(null)}>Цена изменилась. Попробуйте снова.</Snackbar>)
+	   })
+
 	   socket.on("kill", () => {
 		clearInterval(this.state.globState.timer)
 		this.setPopout(
@@ -95,18 +100,18 @@ class App extends Component {
 		socket.emit("get_stocks");	
 		this.setPopout(null)
 		socket.on("updated_score", (data) => {
-			console.log(data)
+			//console.log(data)
 			const { score, add_score} = data;
 			const { user } = this.state.globState;
 			this.setGlobState({ user: { ...user, score }});
 		})
 		socket.on("updated_stocks", stocks => {
-			console.log(stocks)
+			//console.log(stocks)
 			this.setGlobState({ stocks });
 		})
 
 		socket.on("updated_buys", buys => {
-			console.log(buys)
+			//console.log(buys)
 			const { user } = this.state.globState;
 			this.setGlobState({  user: { ...user, buys} });
 		})

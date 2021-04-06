@@ -1,5 +1,5 @@
 import { Button, RichCell, List, Avatar, ScreenSpinner } from "@vkontakte/vkui";
-import React from "react";
+import React, { useEffect } from "react";
 
 import stock_1 from "../../img/stock_1.svg";
 import stock_2 from "../../img/stock_2.svg";
@@ -23,13 +23,15 @@ const ModalStock = ({ stocks, user, socket, setPopout }) => {
 
 
     function getStatus(i) {
-        const stock = stocks[i];
-        return `+ ${(stock.speed/1000).toFixed(3)}PC/сек, цена ${(stocks[i].cost*(user.buys.filter((i) => i.stock_id === stock.stock_id).length+1)/1000).toFixed(3)}PC `
+        const stock = Stocks[i];
+
+        return `+ ${(stock.speed/1000).toFixed(3)}PC/сек, цена ${(stocks[i].cost*(user.buys.filter((e) => e.stock_id === stock.stock_id).length+1)/1000).toFixed(3)}PC `
     }
 
     function buy(i) {
-        setPopout(<ScreenSpinner />)
-        socket.emit("buy", { user_id: user.user_id, stock_id: Stocks[i].stock_id });
+        console.log(Stocks.map())
+        // setPopout(<ScreenSpinner />)
+        // socket.emit("buy", { user_id: user.user_id, stock_id: Stocks[i].stock_id });
     }
 
     return(
