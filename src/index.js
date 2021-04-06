@@ -180,5 +180,5 @@ setInterval(() => {
         io.emit("updated_stocks", stocks)
       }) 
     })
-}, 2000)
+}, 10000)
 
