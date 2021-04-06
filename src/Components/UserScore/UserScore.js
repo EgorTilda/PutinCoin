@@ -3,7 +3,7 @@ import React from "react";
 import "./UserScore.scss";
 import coinImg from "./../../img/Coin-wh.svg";
 
-const UserScore = ({ scoreValue }) => {
+const UserScore = ({ scoreValue, addScore }) => {
     return (
         <div className="score">
             <div className="score__content">
@@ -13,6 +13,7 @@ const UserScore = ({ scoreValue }) => {
                     </div>
                     <img className="score__img" src={coinImg} />
                 </div>
+                <span className="score__desc">+{addScore} P</span>
             </div>
         </div>
     );

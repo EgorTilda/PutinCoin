@@ -8,11 +8,12 @@ import "./ViewHome.scss"
 const ViewHome = ({ id, activePanel, popout, globState, setActiveModal, modal }) => {
     const { user } = globState;
     const score = user ? (user.score / 1000).toFixed(3) : null;
+    const addScore = user ? user.add_score : null;
     return (
         <View id={id} popout={popout} activePanel={activePanel} modal={modal}>
             <Panel className="main" id="main">
                 {user &&
-                    <UserScore scoreValue={score.toString().replace(".", ",")} />
+                    <UserScore scoreValue={score.toString().replace(".", ",")} addScore={addScore.toString().replace(".", ",")} />
                 }
 
                 <div className="card-nav">

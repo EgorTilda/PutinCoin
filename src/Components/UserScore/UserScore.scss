@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap');
+$descColor: rgba(255, 255, 255, .7);
 .score {
   width: 100vw;
   min-height: 40vh;
@@ -9,11 +9,11 @@
   background-color: #FAD961;
   background-image: linear-gradient(180deg, #FAD961 0%, #F76B1C 100%); 
   padding-bottom: 30px;
+  font-family: 'Montserrat', sans-serif;
   text-align: center;
   color: #fff;
   
   &__value {
-    font-family: 'Montserrat', sans-serif;
     font-size: 3rem;
     font-weight: 700;
     display: flex;
@@ -27,6 +27,12 @@
   &__img {
     display: block;
     margin-left: 10px;
+  }
+
+  &__desc {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: $descColor;
   }
 
 }
