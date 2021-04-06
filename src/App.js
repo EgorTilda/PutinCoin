@@ -101,9 +101,8 @@ class App extends Component {
 		this.setPopout(null)
 		socket.on("updated_score", (data) => {
 			//console.log(data)
-			const { score, add_score} = data;
 			const { user } = this.state.globState;
-			this.setGlobState({ user: { ...user, score }});
+			this.setGlobState({ user: { ...user, ...data }});
 		})
 		socket.on("updated_stocks", stocks => {
 			//console.log(stocks)
