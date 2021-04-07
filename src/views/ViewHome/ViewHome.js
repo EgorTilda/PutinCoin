@@ -5,7 +5,7 @@ import "./ViewHome.scss";
 import UserScore from "./../../Components/UserScore/UserScore";
 import "./ViewHome.scss"
 
-const ViewHome = ({ id, activePanel, popout, globState, setActiveModal, modal }) => {
+const ViewHome = ({ id, activePanel, popout, globState, setActiveModal, modal, snackbar }) => {
     const { user } = globState;
     const score = user ? (user.score / 1000).toFixed(3) : null;
     const addScore = user ? user.add_score : null;
@@ -33,6 +33,7 @@ const ViewHome = ({ id, activePanel, popout, globState, setActiveModal, modal })
                         </Card>
                     </CardGrid>
                 </div>
+                {snackbar}
             </Panel>
         </View>
     );
