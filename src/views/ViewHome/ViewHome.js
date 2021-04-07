@@ -13,7 +13,7 @@ const ViewHome = ({ id, activePanel, popout, globState, setActiveModal, modal })
         <View id={id} popout={popout} activePanel={activePanel} modal={modal}>
             <Panel className="main" id="main">
                 {user &&
-                    <UserScore scoreValue={score.toString().replace(".", ",")} addScore={addScore} />
+                    <UserScore scoreValue={score.toString().replace(".", ",")} addScore={addScore.toString().replace(".", ",")} />
                 }
 
                 <div className="card-nav">

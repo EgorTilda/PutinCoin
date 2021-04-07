@@ -13,7 +13,7 @@ const UserScore = ({ scoreValue, addScore }) => {
                     </div>
                     <img className="score__img" src={coinImg} />
                 </div>
-                <span className="score__desc">+{addScore} P</span>
+                <span className="score__desc">+{addScore} P / сек.</span>
             </div>
         </div>
     );
