@@ -21,11 +21,11 @@ sequelize.define("User", {
         primaryKey: true
     },
     score: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.BIGINT,
         defaultValue: 0
     },
     speed: {
-        type: DataTypes.BIGINT,
+        type: DataTypes.INTEGER,
         defaultValue: 1
     },
     socket_id: {
