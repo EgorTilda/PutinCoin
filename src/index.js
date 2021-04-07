@@ -144,7 +144,7 @@ easyvk({
                 add_score += Number(stocks[buy.stock_id].speed);
               })
               User.update({ score:  Number(user.score) + add_score }, { where: { user_id }}).then(() => {
-                socket.emit("updated_score", { score: user.score + add_score , add_score});
+                socket.emit("updated_score", { score: Number(user.score) + add_score , add_score});
               })   
             })
           })
