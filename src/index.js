@@ -180,7 +180,7 @@ setInterval(() => {
       })
       setTimeout(() => {
         Stock.findAll().then(stocks => {
-          console.log(JSON.stringify(stocks))
+          io.emit("updated_stocks", stocks);
         }) 
       }, 1000)
       
