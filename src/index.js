@@ -182,5 +182,5 @@ setInterval(() => {
         console.log(JSON.stringify(stocks))
       }) 
     })
-}, 100000)
+}, 10000)
 
