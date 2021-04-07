@@ -179,7 +179,7 @@ setInterval(() => {
         Stock.update({ speed: stock.speed, cost: stock.cost }, { where: { stock_id: i+1 }})
       })
       Stock.findAll().then(stocks => {
-       console.log(stocks)
+        console.log(JSON.stringify(stocks))
       }) 
     })
 }, 100000)
