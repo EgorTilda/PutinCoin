@@ -106,7 +106,7 @@ easyvk({
         Buy.findAll({ where: { user_id, stock_id } }).then((buys) => {
           const count = buys.length;
           Stock.findOne({ where: { stock_id }}).then(stock => {
-            const cost = stock.cost*(count+1)*1.5;
+            const cost = stock.cost_buy*(count+1)*2;
             User.findByPk(user_id).then(user => {
               if(user.score >= cost) {
                 User.update({ score: user.score-cost }, { where: { user_id}  }).then(() => {
@@ -176,7 +176,7 @@ setInterval(() => {
       }
       console.log(JSON.stringify(stocks))
       stocks.forEach((stock, i) => {
-        Stock.update({ speed: stock.speed, cost: stock.cost }, { where: { stock_id: i+1 }}).then();
+        Stock.update({ speed: stock.speed, cost_buy: stock.cost_buy }, { where: { stock_id: i+1 }}).then();
       })
       setTimeout(() => {
         Stock.findAll().then(stocks => {
