@@ -137,13 +137,13 @@ easyvk({
 
       socket.on("add_score_timer", (user_id) => {
         User.findOne({ where: { user_id } }).then((user) => {
-          let add_score = user.speed;
+          let add_score =  Number(user.speed);
           Buy.findAll({ where: { user_id }}).then(buys => {
             Stock.findAll().then(stocks => {
               buys.forEach((buy) => {
-                add_score += stocks[buy.stock_id].speed;
+                add_score += Number(stocks[buy.stock_id].speed);
               })
-              User.update({ score:  user.score + add_score }, { where: { user_id }}).then(() => {
+              User.update({ score:  Number(user.score) + add_score }, { where: { user_id }}).then(() => {
                 socket.emit("updated_score", { score: user.score + add_score , add_score});
               })   
             })
