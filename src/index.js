@@ -174,7 +174,7 @@ setInterval(() => {
         let j = Math.floor(Math.random() * (i + 1));
         [stocks[i], stocks[j]] = [stocks[j], stocks[i]];
       }
-      console.log(stocks)
+      console.log(JSON.stringify(stocks))
       // stocks.forEach((stock, i) => {
       //   Stock.update({ speed: stock.speed, cost: stock.cost }, { where: { stock_id: i }})
       // })
