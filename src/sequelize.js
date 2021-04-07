@@ -25,7 +25,7 @@ sequelize.define("User", {
         defaultValue: 0
     },
     speed: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.BIGINT,
         defaultValue: 1
     },
     socket_id: {
