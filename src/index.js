@@ -122,6 +122,13 @@ easyvk({
         })
       })
 
+      socket.on("sale", (data) => {
+        const { user_id, stock_id} = data;
+        Buy.findOne({ user_id, stock_id }).then((d) => {
+            console.log(JSON.stringify(d))
+        })
+      })
+
       socket.on("get_stocks", () => {
         Stock.findAll().then(stocks => {
           socket.emit("updated_stocks", stocks)
