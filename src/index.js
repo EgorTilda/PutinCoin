@@ -124,7 +124,7 @@ easyvk({
 
       socket.on("sale", (data) => {
         const { user_id, stock_id} = data;
-        Buy.findOne({ where: { user_id, stock_id }, order: [["buy_id", "ASC"]]}).then((d) => {
+        Buy.findOne({ where: { user_id, stock_id }, order: [["buy_id", "DESC"]]}).then((d) => {
             console.log(JSON.stringify(d))
         })
       })
