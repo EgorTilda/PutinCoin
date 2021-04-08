@@ -5,7 +5,9 @@
   "main": "./src/index.js",
   "type": "module",
   "scripts": {
-    "start": "node ./src/index"
+    "start": "node ./src/index",
+    "predeploy": "git add . && git commit -m 'better'",
+    "deploy": "git push heroku master"
   },
   "author": "",
   "license": "ISC",
