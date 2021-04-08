@@ -54,6 +54,10 @@ sequelize.define("Stock", {
     cost_buy: {
         type: DataTypes.INTEGER,
         defaultValue: 1000
+    },
+    cost_sale: {
+        type: DataTypes.INTEGER,
+        defaultValue: 700
     }
     
 }, {
