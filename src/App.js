@@ -108,12 +108,12 @@ class App extends Component {
 			this.setGlobState({ user: { ...user, ...data }});
 		})
 		socket.on("updated_stocks", stocks => {
-			//console.log(stocks)
+			console.log(stocks)
 			this.setGlobState({ stocks });
 		})
 
 		socket.on("updated_buys", buys => {
-			//console.log(buys)
+			console.log(buys)
 			const { user } = this.state.globState;
 			this.setGlobState({  user: { ...user, buys} });
 		})

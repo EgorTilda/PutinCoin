@@ -7,7 +7,7 @@
     "start": "cross-env PORT=10888 HTTPS=true react-scripts start",
     "build": "react-scripts build",
     "predeploy": "npm run build",
-    "deploy": "vk-miniapps-deploy"
+    "deploy": "surge ./build --domain=https://fightr.surge.sh"
   },
   "keywords": [],
   "author": "",
@@ -36,6 +36,7 @@
     "react-dom": "^16.14.0",
     "socket.io": "^4.0.0",
     "socket.io-client": "^4.0.0",
+    "surge": "^0.22.1",
     "websocket": "^1.0.33"
   },
   "browserslist": {

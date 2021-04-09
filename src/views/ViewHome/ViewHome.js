@@ -7,8 +7,8 @@ import "./ViewHome.scss"
 
 const ViewHome = ({ id, activePanel, popout, globState, setActiveModal, modal, snackbar }) => {
     const { user } = globState;
-    const score = user ? (user.score / 1000).toFixed(3) : "Загрузка...";
-    const addScore = user ? (user.add_score / 1000).toFixed(3) : "Загрузка...";
+    const score = user ? (user.score / 1000).toFixed(3) : 0;
+    const addScore = user ? (user.add_score / 1000).toFixed(3) : 0;
     return (
         <View id={id} popout={popout} activePanel={activePanel} modal={modal}>
             <Panel className="main" id="main">
