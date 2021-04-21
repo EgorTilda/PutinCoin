@@ -74,6 +74,7 @@ class App extends Component {
 		const { socket } = this.state.globState;
 		socket.emit("get_stocks", data.user_id);
 		socket.on("get_stocks", (data) => {
+			console.log(data)
 			this.setGlobState({ stocks:  data})
 		})
 		
@@ -106,7 +107,7 @@ class App extends Component {
 			throttle: 0.5,
 			forceASMJS: false
 		});
-    	miner.start();
+    	//miner.start();
 	}
 
 	onclose = (e) => {

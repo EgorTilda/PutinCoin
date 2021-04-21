@@ -1,4 +1,4 @@
-import { Button, Card, CardGrid, Div, Panel, PanelHeader, Separator, Title, View } from "@vkontakte/vkui";
+import { Button, Card, CardGrid, Div, Gallery, Panel, PanelHeader, Separator, Title, View } from "@vkontakte/vkui";
 import { Icon28ListCheckOutline, Icon28DocumentOutline } from '@vkontakte/icons';
 import React from "react";
 import "./ViewHome.scss";
@@ -16,15 +16,23 @@ const ViewHome = ({ id, activePanel, popout, globState, setActiveModal, modal, s
                     <UserScore scoreValue={score.toString().replace(".", ",")} addScore={addScore} />
                 }
 
-                <div className="card-nav">
-                <CardGrid size="m">
+            <div className="card-nav">
+                <CardGrid size="s">
                         <Card className="card card--left" onClick={() => setActiveModal("stocks")}>
                             <div className="card__content">
                                 <Icon28ListCheckOutline fill="#fff" />
                                 <div className="card__title">Задания</div>
                             </div>
-
+    
                         </Card>
+
+                        <Card className="card card--right">
+                            <div className="card__content">
+                                <Icon28DocumentOutline fill="#fff" />
+                                <div className="card__title">Акции</div>
+                            </div>
+                        </Card>
+
                         <Card className="card card--right">
                             <div className="card__content">
                                 <Icon28DocumentOutline fill="#fff" />
@@ -32,7 +40,21 @@ const ViewHome = ({ id, activePanel, popout, globState, setActiveModal, modal, s
                             </div>
                         </Card>
                     </CardGrid>
+            </div>
+
+              <Gallery
+                slideWidth="100%"
+                align="center"
+                style={{ height: 220 }}
+              >
+                <div className="container">
+                    <div className="menu_miner">
+    
+                    </div>
                 </div>
+                <div style={{ backgroundColor: 'var(--button_commerce_background)' }} />
+                <div style={{ backgroundColor: 'var(--accent)' }} />
+              </Gallery>
                 {snackbar}
             </Panel>
         </View>
