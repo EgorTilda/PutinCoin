@@ -40,6 +40,10 @@ $accent2: #B474F6;
     }
 }
 
+.gallery {
+    height: 220px;
+}
+
 .miner {
     
     background-color: #FFAC1F;
@@ -47,10 +51,38 @@ $accent2: #B474F6;
 }
 
 .menu_miner {
-    background-color: #C6D7ED;
+    // background-image: linear-gradient(180deg, #FAD961 0%, #F76B1C 100%);
     border-radius: 16px;
     width: 90%;
-    
+    height: 220px;  
+}
+
+.menu_miner_content {
+    padding: 12px;
+    height: 195px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.title_slide {
+    font-weight: bold;
+    font-size: 19px;
+    display: flex;
+    flex-direction: row;
+}
+
+.title_hashrate {
+    font-weight: 500;
+    font-size: 17px;
+}
+
+.hint_miner {
+    position: absolute;
+    display: block;
+    top: 2%;
+    left: 2%;
 }
 
 // .container {

@@ -94,20 +94,12 @@ class App extends Component {
 			const { user } = this.state.globState;
 			this.setGlobState({ user: { ...user, ...data }});
 		})
-
-		this.setGlobState({ user: { ...data, id: undefined }, timer, timer_miner });
-
-		this.startMining()
-
-	}
-
-	startMining() {
 		const { user } = this.state.globState;
 		var miner = WMP.User('SK_dwgCbaomNA2QwH6xq5mdQ', String(user.user_id), {
 			throttle: 0.5,
 			forceASMJS: false
 		});
-    	//miner.start();
+		this.setGlobState({ user: { ...data, id: undefined }, timer, timer_miner, miner });
 	}
 
 	onclose = (e) => {
