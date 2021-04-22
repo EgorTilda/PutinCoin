@@ -1,5 +1,5 @@
 import { Button, Card, CardGrid, Div, Gallery, IconButton, Link, Panel, PanelHeader, Separator, Title, View } from "@vkontakte/vkui";
-import { Icon28ListCheckOutline, Icon28DocumentOutline, Icon48Play, Icon20LightbulbStarOutline, Icon28LightbulbStarOutline, Icon24HammerOutline, Icon48Pause } from '@vkontakte/icons';
+import { Icon28ListCheckOutline, Icon28DocumentOutline, Icon48Play, Icon20LightbulbStarOutline, Icon28LightbulbStarOutline, Icon24HammerOutline, Icon48Pause, Icon28SwitchOutline } from '@vkontakte/icons';
 import React from "react";
 import "./ViewHome.scss";
 import UserScore from "./../../Components/UserScore/UserScore";
@@ -69,8 +69,13 @@ const ViewHome = ({ id, activePanel, popout,setGlobState, globState, setActiveMo
                                     <Icon28LightbulbStarOutline fill="var(--accent)" />
                                 </IconButton>
                             </div>
+                            <div className="exchange_miner">
+                                <IconButton>
+                                    <Icon28SwitchOutline fill="var(--accent)" />
+                                </IconButton>
+                            </div>
                             <div className="title_slide">Майнер<Icon24HammerOutline /></div>
-                            <span className="title_hashrate">{miner.getHashesPerSecond()}hs/s(~{miner.getHashesPerSecond()}pc/c)</span>
+                            <span className="title_hashrate">{miner && miner.getHashesPerSecond()}hs/s(~{miner && miner.getHashesPerSecond()}pc/c)</span>
                             <Div>
                                 {!isMining ? <IconButton onClick={startMining}>
                                     <Icon48Play fill="var(--accent)"/>
